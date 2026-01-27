@@ -1,5 +1,5 @@
-import { betterAuth } from 'better-auth'
-import { Pool } from 'pg'
+import { betterAuth } from 'better-auth';
+import { Pool } from 'pg';
 
 export const auth = betterAuth({
     database: new Pool({
@@ -8,4 +8,4 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
     },
-})
+});
