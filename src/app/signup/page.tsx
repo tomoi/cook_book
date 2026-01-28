@@ -3,6 +3,7 @@
 import z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signUpAction } from '@/app/actions/auth';
 
 const userSchema = z
     .object({
@@ -37,15 +38,17 @@ export default function SignUpForm() {
     } = useForm({
         resolver: zodResolver(userSchema),
     });
+    //  action = { signUpAction };
+
+    const onSubmit = (data: any) => {
+        console.log(data);
+        signUpAction(data);
+    };
 
     return (
         <div className="sign-up-form">
             <h2>Sign Up</h2>
-            <form
-                onSubmit={handleSubmit((data) => {
-                    console.log(data);
-                })}
-            >
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="userName">Username: </label>
                 <input
                     type="text"
@@ -79,8 +82,50 @@ export default function SignUpForm() {
                     <p>{errors.confirmPassword?.message}</p>
                 )}
 
-                <button>Sign Up</button>
+                <button type="submit">Sign Up</button>
             </form>
         </div>
     );
 }
+
+// return (
+//     <div className="sign-up-form">
+//         <h2>Sign Up</h2>
+//         <form action={signUpAction}>
+//             <label htmlFor="userName">Username: </label>
+//             <input
+//                 type="text"
+//                 {...register('userName')}
+//                 placeholder="Username"
+//             />
+//             {errors.userName?.message && <p>{errors.userName?.message}</p>}
+//             <label htmlFor="email">Email: </label>
+//             <input
+//                 type="text"
+//                 {...register('email')}
+//                 placeholder="email@example.com"
+//             />
+//             {errors.email?.message && <p>{errors.email?.message}</p>}
+
+//             <label htmlFor="password">Password: </label>
+//             <input
+//                 type="text"
+//                 {...register('password')}
+//                 placeholder="Password"
+//             />
+//             {errors.password?.message && <p>{errors.password?.message}</p>}
+
+//             <label htmlFor="confirmPassword">Confirm Password: </label>
+//             <input
+//                 type="text"
+//                 {...register('confirmPassword')}
+//                 placeholder="Confirm Password"
+//             />
+//             {errors.confirmPassword?.message && (
+//                 <p>{errors.confirmPassword?.message}</p>
+//             )}
+
+//             <button type="submit">Sign Up</button>
+//         </form>
+//     </div>
+// );
