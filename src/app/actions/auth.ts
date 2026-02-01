@@ -19,17 +19,23 @@ export async function signUpAction(data: any ) {
     redirect("/");
 }
 
-export async function signInAction(formData: FormData) {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+export async function signInAction(data: any) {
+    const email = data.email as string;
+    const password = data.password as string;
 
+
+    try {
     await auth.api.signInEmail({
         body: {
             email, password,
         }
     })
+        redirect("/");
 
-    redirect("/");
+    } catch (error: any) {
+        return({"error": {"message": error.message }})
+    }
+
 }
 
 export async function signOutAction() {

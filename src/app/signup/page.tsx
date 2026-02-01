@@ -4,6 +4,7 @@ import z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpAction } from '@/app/actions/auth';
+import { useState } from 'react';
 
 const userSchema = z
     .object({
@@ -38,7 +39,8 @@ export default function SignUpForm() {
     } = useForm({
         resolver: zodResolver(userSchema),
     });
-    //  action = { signUpAction };
+
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = (data: any) => {
         console.log(data);
