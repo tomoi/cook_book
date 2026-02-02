@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signInAction } from '@/app/actions/auth';
 import { useState } from 'react';
 
-import LogOutbutton from '../../components/LogOutButton';
+import LogOutbutton from '../../../components/LogOutButton/LogOutButton';
 
 const userSchema = z.object({
     email: z.string().email({ message: 'Please enter a valid email address.' }),
@@ -51,9 +51,10 @@ export default function SignUpForm() {
 
                 <label htmlFor="password">Password: </label>
                 <input
-                    type="text"
+                    type="password"
                     {...register('password')}
                     placeholder="Password"
+                    autoComplete="current-password"
                 />
                 {errors.password?.message && <p>{errors.password?.message}</p>}
 
