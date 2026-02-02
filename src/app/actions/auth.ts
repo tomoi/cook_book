@@ -30,11 +30,13 @@ export async function signInAction(data: any) {
             email, password,
         }
     })
-        redirect("/");
+
 
     } catch (error: any) {
         return({"error": {"message": error.message }})
     }
+                redirect("/");
+
 
 }
 
@@ -44,4 +46,11 @@ export async function signOutAction() {
     })
         redirect("/");
 
+}
+
+export async function getUserSession() {
+    const userSession = await auth.api.getSession({
+        headers: await headers()
+    })
+    return userSession
 }
