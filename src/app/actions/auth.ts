@@ -1,56 +1,62 @@
-'use server'
+'use server';
 
-import { auth } from "@/utils/auth";
-import { authClient } from "@/utils/auth-client";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { auth } from '@/utils/auth';
+import { authClient } from '@/utils/auth-client';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-export async function signUpAction(data: any ) {
+export async function signUpAction(data: any) {
     const email = data.email as string;
     const password = data.password as string;
     const name = data.userName as string;
 
-    await auth.api.signUpEmail({
-        body: {
-            email, password, name,
-        }
-    })
+    try {
+        await auth.api.signUpEmail({
+            body: {
+                email,
+                password,
+                name,
+            },
+        });
+    } catch (error: any) {
+        return { error: { message: error.message } };
+    }
 
-    redirect("/");
+    redirect('/');
 }
 
 export async function signInAction(data: any) {
     const email = data.email as string;
     const password = data.password as string;
 
-
     try {
-    await auth.api.signInEmail({
-        body: {
-            email, password,
-        }
-    })
-
-
+        await auth.api.signInEmail({
+            body: {
+                email,
+                password,
+            },
+        });
     } catch (error: any) {
-        return({"error": {"message": error.message }})
+        return { error: { message: error.message } };
     }
-                redirect("/");
-
-
+    redirect('/');
 }
 
 export async function signOutAction() {
-    await auth.api.signOut({
-        headers: await headers()
-    })
-        redirect("/");
+    try {
+        await auth.api.signOut({
+            headers: await headers(),
+        });
+    } catch (error: any) {
+        return { error: { message: error.message } };
+    }
 
+    redirect('/');
 }
 
 export async function getUserSession() {
     const userSession = await auth.api.getSession({
-        headers: await headers()
-    })
-    return userSession
+        headers: await headers(),
+    });
+    return userSession;
 }

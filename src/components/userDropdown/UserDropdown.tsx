@@ -1,12 +1,12 @@
 'use server';
 
 import { useSignedInStatus } from '@/app/hooks/_useSignedInStatus';
+import Link from 'next/link';
 
 export default async function UserDropdown() {
     const userSession = await useSignedInStatus();
-    console.log(userSession);
     if (userSession !== null) {
-        return <p>Logged In</p>;
+        return <p>Welcome, {userSession.user.name}!</p>;
     }
-    return <p>Logged Out</p>;
+    return <Link href="/signin">Sign In</Link>;
 }
