@@ -17,16 +17,18 @@ export default function RecipeForm(userObject: any) {
     }
 
     const userSchema = z.object({
-        title: z.string().min(5, { message: 'Recipe title is required.' }),
+        title: z
+            .string()
+            .min(5, 'Recipe title must be more than 4 characters.'),
         ingredients: z
             .array(
                 z.object({
                     ingredient: z
                         .string()
-                        .min(2, { message: 'Ingredient name is required.' }),
+                        .min(2, 'Ingredient name is required.'),
                     count: z.coerce
                         .number()
-                        .positive({ message: 'Must be a positive number.' }),
+                        .positive('Must be a positive number.'),
                     measure_type: z.enum([
                         'cup',
                         'tbsp',
@@ -36,7 +38,8 @@ export default function RecipeForm(userObject: any) {
                     ]),
                 })
             )
-            .min(2, { message: 'Must have at least 2 ingredients.' }),
+            .min(2),
+        instructions: z.string().min(10, 'Must provide instructions.'),
     });
     const {
         register,
@@ -73,7 +76,7 @@ export default function RecipeForm(userObject: any) {
                     <option value="" disabled>
                         Select Measurement Type
                     </option>
-                    <option value="cup">Cup</option>
+                    <option value="cup">Cup(s)</option>
                 </select>
                 {errors.ingredients?.[i]?.measure_type?.message && (
                     <p>{errors.ingredients?.[i]?.measure_type?.message}</p>
@@ -95,6 +98,12 @@ export default function RecipeForm(userObject: any) {
             />
             {errors.title?.message && <p>{errors.title?.message}</p>}
             {ingredients}
+            <p>Must provide 2 or more ingredients.</p>
+            <textarea {...register('instructions')}></textarea>
+            {errors.instructions?.message && (
+                <p>{errors.instructions?.message}</p>
+            )}
+
             <input
                 type="button"
                 onClick={(e) => {
