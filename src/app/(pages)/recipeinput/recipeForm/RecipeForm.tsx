@@ -5,6 +5,14 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
+async function submitData(data: any) {
+    const response = await fetch('http://localhost:3000/api/recipe', {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+    // console.log(await response.json());
+}
+
 export default function RecipeForm(userObject: any) {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
@@ -12,7 +20,8 @@ export default function RecipeForm(userObject: any) {
 
     async function onSubmit(data: any) {
         if (confirm('Are you sure you want to submit?')) {
-            console.log(data);
+            // console.log(data);
+            submitData(data);
         }
     }
 
@@ -99,11 +108,6 @@ export default function RecipeForm(userObject: any) {
             {errors.title?.message && <p>{errors.title?.message}</p>}
             {ingredients}
             <p>Must provide 2 or more ingredients.</p>
-            <textarea {...register('instructions')}></textarea>
-            {errors.instructions?.message && (
-                <p>{errors.instructions?.message}</p>
-            )}
-
             <input
                 type="button"
                 onClick={(e) => {
@@ -123,6 +127,11 @@ export default function RecipeForm(userObject: any) {
                 disabled={ingredientCount === 1}
                 value="Remove Ingredient"
             />
+            <textarea {...register('instructions')}></textarea>
+            {errors.instructions?.message && (
+                <p>{errors.instructions?.message}</p>
+            )}
+
             {/* TODO: make this a submit button but have it ask the user if they
             want to submit the recipe before it pushes to the server. */}
             <input type="submit" disabled={loading} value="Submit Recipe" />
