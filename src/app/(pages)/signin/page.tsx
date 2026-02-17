@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signInAction } from '@/app/actions/auth';
 import { useState } from 'react';
+import Link from 'next/link';
 
 import LogOutbutton from '../../../components/LogOutButton/LogOutButton';
 
@@ -39,7 +40,7 @@ export default function SignUpForm() {
 
     return (
         <div className="sign-up-form">
-            <h2>Log In</h2>
+            <h2>Sign In</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="email">Email: </label>
                 <input
@@ -63,6 +64,7 @@ export default function SignUpForm() {
                 </button>
             </form>
             {error && <p>{error}</p>}
+            <Link href="/signup">Sign Up</Link>;
             <LogOutbutton />
         </div>
     );
