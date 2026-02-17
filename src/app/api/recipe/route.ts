@@ -34,15 +34,25 @@ export async function POST(req: Request) {
     //connect to the pg database
     const client = await pool.connect();
 
-    const text =
+    const recipe_text =
         'INSERT INTO recipe(title, instructions, user_id) VALUES($1, $2, $3) RETURNING id';
-    const values = [data.title, data.instructions, userSession?.user.id];
-    const res = await client.query(text, values);
+    const recipe_values = [data.title, data.instructions, userSession?.user.id];
+    const res = await client.query(recipe_text, recipe_values);
 
-    //TODO: make the insert command into the ingredients table as well https://stackoverflow.com/questions/20815028/how-do-i-insert-multiple-values-into-a-postgres-table-at-once
+    const ingredients_text =
+        'INSERT INTO ingredient(name, measurement_type, amount, recipe_id) VALUES($1, $2, $3, $4)';
+
+    for (const i of data.ingredients) {
+        const ingredients_values = [
+            i.ingredient,
+            i.measure_type,
+            i.count,
+            res.rows[0].id,
+        ];
+        const res2 = await client.query(ingredients_text, ingredients_values);
+    }
+
     client.release();
-
-    console.log(res.rows);
     return Response.json(res);
 }
 

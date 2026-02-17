@@ -11,6 +11,22 @@ async function submitData(data: any) {
         body: JSON.stringify(data),
     });
     // console.log(await response.json());
+    //TODO: once the recipe is pushed to server, redirect user to the page where the recipe is viewed.
+}
+
+function fraction_to_number(fraction: string) {
+    let fraction_array = fraction.split(' ');
+    let sum = 0;
+    fraction_array.map((num, index) => {
+        if (num.search('/') >= 0) {
+            const new_num = num.split('/');
+            sum += Number(new_num[0]) / Number(new_num[1]);
+        } else {
+            sum += Number(num);
+        }
+    });
+    console.log(sum);
+    return sum;
 }
 
 export default function RecipeForm(userObject: any) {
@@ -35,15 +51,29 @@ export default function RecipeForm(userObject: any) {
                     ingredient: z
                         .string()
                         .min(2, 'Ingredient name is required.'),
-                    count: z.coerce
-                        .number()
-                        .positive('Must be a positive number.'),
+                    count: z.preprocess((fraction: string) => {
+                        let fraction_array = fraction.split(' ');
+                        let sum = 0;
+                        fraction_array.map((num, index) => {
+                            if (num.search('/') >= 0) {
+                                const new_num = num.split('/');
+                                sum += Number(new_num[0]) / Number(new_num[1]);
+                            } else {
+                                sum += Number(num);
+                            }
+                        });
+                        console.log(sum);
+                        //round to 3 decimal places
+                        return Math.round(sum * 1000) / 1000;
+                    }, z.number().positive('Must be a positive number.')),
                     measure_type: z.enum([
                         'cup',
                         'tbsp',
                         'tsp',
-                        'pinch',
-                        'dash',
+                        'g',
+                        'kg',
+                        'ml',
+                        'l',
                     ]),
                 })
             )
@@ -73,7 +103,11 @@ export default function RecipeForm(userObject: any) {
                     <p>{errors.ingredients?.[i]?.ingredient?.message}</p>
                 )}
 
-                <input type="number" {...register(`ingredients.${i}.count`)} />
+                <input
+                    type="text"
+                    pattern="[0-9/]"
+                    {...register(`ingredients.${i}.count`)}
+                />
                 {errors.ingredients?.[i]?.count?.message && (
                     <p>{errors.ingredients?.[i]?.count?.message}</p>
                 )}
@@ -86,6 +120,12 @@ export default function RecipeForm(userObject: any) {
                         Select Measurement Type
                     </option>
                     <option value="cup">Cup(s)</option>
+                    <option value="tsp">Teaspoon(s)</option>
+                    <option value="tbsp">Tablespoon(s)</option>
+                    <option value="g">Gram(s)</option>
+                    <option value="kg">Kilogram(s)</option>
+                    <option value="ml">Milliliter(s)</option>
+                    <option value="l">Liter(s)</option>
                 </select>
                 {errors.ingredients?.[i]?.measure_type?.message && (
                     <p>{errors.ingredients?.[i]?.measure_type?.message}</p>
