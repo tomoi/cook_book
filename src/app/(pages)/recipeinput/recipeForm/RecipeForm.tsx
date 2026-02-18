@@ -10,23 +10,7 @@ async function submitData(data: any) {
         method: 'POST',
         body: JSON.stringify(data),
     });
-    // console.log(await response.json());
     //TODO: once the recipe is pushed to server, redirect user to the page where the recipe is viewed.
-}
-
-function fraction_to_number(fraction: string) {
-    let fraction_array = fraction.split(' ');
-    let sum = 0;
-    fraction_array.map((num, index) => {
-        if (num.search('/') >= 0) {
-            const new_num = num.split('/');
-            sum += Number(new_num[0]) / Number(new_num[1]);
-        } else {
-            sum += Number(num);
-        }
-    });
-    console.log(sum);
-    return sum;
 }
 
 export default function RecipeForm(userObject: any) {
@@ -36,7 +20,6 @@ export default function RecipeForm(userObject: any) {
 
     async function onSubmit(data: any) {
         if (confirm('Are you sure you want to submit?')) {
-            // console.log(data);
             submitData(data);
         }
     }
@@ -62,7 +45,6 @@ export default function RecipeForm(userObject: any) {
                                 sum += Number(num);
                             }
                         });
-                        console.log(sum);
                         //round to 3 decimal places
                         return Math.round(sum * 1000) / 1000;
                     }, z.number().positive('Must be a positive number.')),

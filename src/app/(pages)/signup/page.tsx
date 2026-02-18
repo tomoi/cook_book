@@ -43,7 +43,6 @@ export default function SignUpForm() {
     const [loading, setLoading] = useState(false);
 
     const onSubmit = (data: any) => {
-        console.log(data);
         signUpAction(data);
     };
 

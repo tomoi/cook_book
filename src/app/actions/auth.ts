@@ -55,8 +55,13 @@ export async function signOutAction() {
 }
 
 export async function getUserSession() {
-    const userSession = await auth.api.getSession({
-        headers: await headers(),
-    });
-    return userSession;
+    try {
+        const userSession = await auth.api.getSession({
+            headers: await headers(),
+        });
+        return userSession;
+    } catch (error: any) {
+        // redirect user home if they are not logged in
+        redirect('/');
+    }
 }

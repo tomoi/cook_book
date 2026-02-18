@@ -11,8 +11,6 @@ export async function GET(request: Request) {
     const res = await client.query('SELECT "title" FROM "recipe"');
     client.release();
 
-    console.log(Response.json(res));
-
     return Response.json(res);
 }
 
