@@ -11,11 +11,10 @@ export async function GET(
     const client = await pool.connect();
     const { recipe_id } = await params;
 
+    //TODO: make 2 separate endpoints so the instructions are not sent multiple times, to save on the amount of data being sent on the server
     const recipe_text =
         'SELECT r.title, r.instructions, i.name, i.measurement_type, i.amount FROM recipe AS r JOIN ingredient AS i ON r.id = i.recipe_id WHERE r.id = $1';
     const values = [recipe_id];
-    const ingredients_text =
-        'SELECT name, measurement_type, amount FROM ingredient WHERE recipe_id = $1';
 
     const res = await client.query(recipe_text, values);
     client.release();
