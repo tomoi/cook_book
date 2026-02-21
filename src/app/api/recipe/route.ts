@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     }
 
     client.release();
-    return Response.json(res);
+    return Response.json({ id: res.rows[0].id });
 }
 
 //a object that the server is likely to receive.
