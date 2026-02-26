@@ -38,9 +38,10 @@ export default function RecipeForm(userObject: any) {
                         .string()
                         .min(2, 'Ingredient name is required.'),
                     count: z.preprocess((fraction: string) => {
+                        //some math to convert the fractions to decimals
                         let fraction_array = fraction.split(' ');
                         let sum = 0;
-                        fraction_array.map((num, index) => {
+                        fraction_array.map((num) => {
                             if (num.search('/') >= 0) {
                                 const new_num = num.split('/');
                                 sum += Number(new_num[0]) / Number(new_num[1]);
@@ -90,7 +91,8 @@ export default function RecipeForm(userObject: any) {
 
                 <input
                     type="text"
-                    pattern="[0-9/]"
+                    //regex to allow any character from 0-9, a forward slash '/', any whitespace character '\s' and it must be 1 or more characters '{1,}'
+                    pattern="[0-9\/\s]{1,}"
                     {...register(`ingredients.${i}.count`)}
                 />
                 {errors.ingredients?.[i]?.count?.message && (

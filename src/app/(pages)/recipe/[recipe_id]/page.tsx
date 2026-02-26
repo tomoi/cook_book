@@ -10,7 +10,6 @@ export default async function recipe({
             `http://localhost:3000/api/recipe/${recipe_id}`
         );
         let data = await response.json();
-        console.log(data.rows);
     } catch (error: any) {
         console.error(error.message);
     }
