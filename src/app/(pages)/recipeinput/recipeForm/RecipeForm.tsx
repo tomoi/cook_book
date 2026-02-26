@@ -4,13 +4,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { redirect } from 'next/navigation';
 
 async function submitData(data: any) {
     const response = await fetch('http://localhost:3000/api/recipe', {
         method: 'POST',
         body: JSON.stringify(data),
     });
-    //TODO: once the recipe is pushed to server, redirect user to the page where the recipe is viewed.
+    const recipe_id = await response.json();
+    //redirect to recipe page
+    redirect(`/recipe/${recipe_id.id}`);
 }
 
 export default function RecipeForm(userObject: any) {

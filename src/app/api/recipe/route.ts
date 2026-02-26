@@ -29,12 +29,18 @@ export async function POST(req: Request) {
     //get user information because the recipe is tied to the user
     const userSession = await getUserSession();
     const data: Recipe = await req.json();
+    const current_date = Date.now();
     //connect to the pg database
     const client = await pool.connect();
 
     const recipe_text =
-        'INSERT INTO recipe(title, instructions, user_id) VALUES($1, $2, $3) RETURNING id';
-    const recipe_values = [data.title, data.instructions, userSession?.user.id];
+        'INSERT INTO recipe(title, instructions, user_id, date_created) VALUES($1, $2, $3, $4) RETURNING id';
+    const recipe_values = [
+        data.title,
+        data.instructions,
+        userSession?.user.id,
+        current_date,
+    ];
     const res = await client.query(recipe_text, recipe_values);
 
     const ingredients_text =
