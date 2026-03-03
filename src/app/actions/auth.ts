@@ -61,7 +61,6 @@ export async function getUserSession() {
         });
         return userSession;
     } catch (error: any) {
-        // redirect user home if they are not logged in
-        redirect('/');
+        console.error(error.message);
     }
 }
