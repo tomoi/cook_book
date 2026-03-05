@@ -8,10 +8,12 @@ const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 //get a list of recipes, for the homepage or things similar
 export async function GET(request: Request) {
     const client = await pool.connect();
-    const res = await client.query('SELECT "title" FROM "recipe"');
+    const res = await client.query(
+        'SELECT "title", "date_created" FROM "recipe"'
+    );
     client.release();
 
-    return Response.json(res);
+    return Response.json(res.rows);
 }
 
 //type for the object that will be passed in the body

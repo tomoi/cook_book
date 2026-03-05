@@ -9,14 +9,15 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
     },
-    session: { 
+    session: {
         expiresIn: 60 * 60 * 24 * 7,
         updateAge: 60 * 60 * 24,
         cookieCache: {
             enabled: true,
             maxAge: 10 * 60, //10 minutes
-            strategy: "compact"
-        }
+            strategy: 'compact',
+        },
     },
-    plugins: [nextCookies()]
+    secret: process.env.BETTER_AUTH_SECRET,
+    plugins: [nextCookies()],
 });

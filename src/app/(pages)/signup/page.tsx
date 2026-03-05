@@ -50,7 +50,7 @@ export default function SignUpForm() {
         <div className="sign-up-form">
             <h2>Sign Up</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="userName">Username: </label>
+                <label htmlFor="userName">Display Name: </label>
                 <input
                     type="text"
                     {...register('userName')}
@@ -59,7 +59,7 @@ export default function SignUpForm() {
                 {errors.userName?.message && <p>{errors.userName?.message}</p>}
                 <label htmlFor="email">Email: </label>
                 <input
-                    type="text"
+                    type="email"
                     {...register('email')}
                     placeholder="email@example.com"
                 />
@@ -67,7 +67,7 @@ export default function SignUpForm() {
 
                 <label htmlFor="password">Password: </label>
                 <input
-                    type="text"
+                    type="password"
                     {...register('password')}
                     placeholder="Password"
                 />
@@ -75,7 +75,7 @@ export default function SignUpForm() {
 
                 <label htmlFor="confirmPassword">Confirm Password: </label>
                 <input
-                    type="text"
+                    type="password"
                     {...register('confirmPassword')}
                     placeholder="Confirm Password"
                 />
