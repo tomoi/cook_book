@@ -1,19 +1,22 @@
 'use server';
 
+import { auth } from '@/utils/auth';
+import { headers } from 'next/headers';
+
 import { redirect } from 'next/navigation';
 import RecipeForm from './recipeForm/RecipeForm';
-import { getUserSession } from '@/app/actions/auth';
 
 export default async function RecipeInput() {
-    const userSession = await getUserSession();
-    //redirect user home if they are not logged in.
-    if (userSession === null) {
-        redirect('/');
-    }
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
+    if (!session) {
+        redirect('/signin');
+    }
     return (
         <main>
-            <RecipeForm userObject={userSession} />
+            <RecipeForm />
         </main>
     );
 }

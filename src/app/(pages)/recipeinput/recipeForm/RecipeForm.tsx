@@ -16,7 +16,7 @@ async function submitData(data: any) {
     redirect(`/recipe/${recipe_id.id}`);
 }
 
-export default function RecipeForm(userObject: any) {
+export default function RecipeForm() {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const [ingredientCount, setIngredientCount] = useState(1);
