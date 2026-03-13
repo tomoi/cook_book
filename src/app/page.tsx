@@ -1,8 +1,11 @@
 'use server';
 
+import Link from 'next/link';
+
 interface Recipe {
     title: string;
     date_created: number;
+    id: number;
 }
 
 export default async function HomePage() {
@@ -10,6 +13,7 @@ export default async function HomePage() {
     try {
         const response = await fetch(`http://localhost:3000/api/recipe`);
         data = await response.json();
+        console.log(data);
     } catch (error: any) {
         console.error(error.message);
     }
@@ -18,15 +22,21 @@ export default async function HomePage() {
             <h1>Home Page</h1>
             {data ? (
                 data.map((recipe: Recipe) => {
-                    <div>
-                        <h2>{recipe.title}</h2>;
-                        <h3>
-                            Recipe Uploaded{' '}
-                            {new Date(recipe.date_created).getMonth()}
-                            {new Date(recipe.date_created).getDate()},{' '}
-                            {new Date(recipe.date_created).getFullYear()}
-                        </h3>
-                    </div>;
+                    return (
+                        <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
+                            <div>
+                                <h2>{recipe.title}</h2>
+                                <p>
+                                    Recipe Uploaded{' '}
+                                    {new Intl.DateTimeFormat('en-CA', {
+                                        month: 'long',
+                                        day: 'numeric',
+                                        year: 'numeric',
+                                    }).format(Number(recipe.date_created))}
+                                </p>
+                            </div>
+                        </Link>
+                    );
                 })
             ) : (
                 <p>No recipes available.</p>

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 export default function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    //search after a short delay to prevent too many api calls
+    //search after a short delay to prevent too many api calls and prevent needing to press the search button
     useEffect(() => {
         const searchDelay = setTimeout(() => {
             console.log(`Searched ${searchValue}`);
