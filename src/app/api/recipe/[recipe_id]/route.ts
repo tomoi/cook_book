@@ -14,9 +14,10 @@ export async function GET(
     const { recipe_id } = await params;
 
     //TODO: make 2 separate endpoints so the instructions are not sent multiple times, to save on the amount of data being sent on the server
-    const recipe_text = 'SELECT title, instructions FROM recipe WHERE id = $1';
+    const recipe_text =
+        'SELECT title, instructions, rating FROM recipe WHERE id = $1';
     const ingredient_text =
-        'SELECT name, measurement_type, amount FROM ingredient WHERE recipe_id = $1';
+        'SELECT name, measurement_type, amount, id FROM ingredient WHERE recipe_id = $1';
     const values = [recipe_id];
 
     const recipe_res = await client.query(recipe_text, values);
@@ -24,7 +25,7 @@ export async function GET(
     client.release();
 
     return Response.json({
-        recipe: recipe_res.rows[0],
+        ...recipe_res.rows[0],
         ingredients: ingredient_res.rows,
     });
 }
