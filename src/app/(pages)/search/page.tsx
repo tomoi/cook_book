@@ -10,6 +10,16 @@ export default function Search() {
         const searchDelay = setTimeout(() => {
             console.log(`Searched ${searchValue}`);
             (async () => {
+                try {
+                    const response = await fetch(
+                        `http://localhost:3000/api/search/${searchValue}`
+                    );
+                    const data = await response.json();
+                    setSearchResults(data);
+                    console.log(data);
+                } catch (error: any) {
+                    console.error(error.message);
+                }
                 // results = await getBungieId(search);
                 // setSearchResults(results);
             })();
