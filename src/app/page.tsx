@@ -11,9 +11,8 @@ interface Recipe {
 export default async function HomePage() {
     let data;
     try {
-        const response = await fetch(`http://localhost:3000/api/recipe`);
+        const response = await fetch(`${process.env.API_URL}/api/recipe`);
         data = await response.json();
-        console.log(data);
     } catch (error: any) {
         console.error(error.message);
     }
