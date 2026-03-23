@@ -7,6 +7,7 @@ import { headers } from 'next/headers';
 import UserDropdown from '../userDropdown/UserDropdown';
 
 import Link from 'next/link';
+import SearchBar from '../SearchBar/SearchBar';
 
 export default async function Header() {
     const session = await auth.api.getSession({
@@ -29,6 +30,7 @@ export default async function Header() {
                 </ul>
             </nav>
             <UserDropdown session={session} />
+            <SearchBar />
         </div>
     );
 }

@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState } from 'react';
+import useSearch from '@/app/hooks/useSearch';
+import Link from 'next/link';
 
 interface Recipe {
     id: number;
@@ -9,30 +11,7 @@ interface Recipe {
 
 export default function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResults, setSearchResults] = useState<Recipe[]>();
-
-    useEffect(() => {
-        console.log(searchValue);
-        //search after a short delay to prevent too many api calls and prevent needing to press the search button
-        if (searchValue) {
-            const searchDelay = setTimeout(async () => {
-                console.log(`Searched ${searchValue}`);
-
-                try {
-                    const response = await fetch(
-                        `http://localhost:3000/api/search/${searchValue}`
-                    );
-                    const data = await response.json();
-                    setSearchResults(data);
-                    console.log(data);
-                } catch (error: any) {
-                    console.error(error.message);
-                }
-            }, 1500);
-
-            return () => clearTimeout(searchDelay);
-        }
-    }, [searchValue]);
+    const searchResults = useSearch(searchValue);
 
     return (
         <div>
@@ -44,15 +23,19 @@ export default function Search() {
                         setSearchValue(event.target.value);
                     }}
                 />
-                <input type="submit" value="Search" />
+                {/* <input type="submit" value="Search" /> */}
             </form>
             <ul>
                 {searchResults ? (
-                    searchResults.map((result) => {
+                    searchResults.map((result: Recipe) => {
                         return (
-                            <div key={result.id}>
-                                <p>{result.title}</p>
-                            </div>
+                            <li key={result.id}>
+                                <Link
+                                    href={`http://localhost:3000/recipe/${result.id}`}
+                                >
+                                    {result.title}
+                                </Link>
+                            </li>
                         );
                     })
                 ) : (
