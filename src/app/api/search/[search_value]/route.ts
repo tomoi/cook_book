@@ -12,7 +12,7 @@ export async function GET(
 
     const text =
         "SELECT id, title FROM recipe WHERE title_search @@ to_tsquery('english', $1)";
-    const values = [search_value];
+    const values = [`${search_value}:*`];
 
     const res = await client.query(text, values);
     client.release();

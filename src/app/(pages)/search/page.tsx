@@ -1,15 +1,23 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+
+interface Recipe {
+    id: number;
+    title: string;
+}
 
 export default function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-    //search after a short delay to prevent too many api calls and prevent needing to press the search button
+    const [searchResults, setSearchResults] = useState<Recipe[]>();
+
     useEffect(() => {
-        const searchDelay = setTimeout(() => {
-            console.log(`Searched ${searchValue}`);
-            (async () => {
+        console.log(searchValue);
+        //search after a short delay to prevent too many api calls and prevent needing to press the search button
+        if (searchValue) {
+            const searchDelay = setTimeout(async () => {
+                console.log(`Searched ${searchValue}`);
+
                 try {
                     const response = await fetch(
                         `http://localhost:3000/api/search/${searchValue}`
@@ -20,23 +28,37 @@ export default function Search() {
                 } catch (error: any) {
                     console.error(error.message);
                 }
-                // results = await getBungieId(search);
-                // setSearchResults(results);
-            })();
-        }, 1500);
+            }, 1500);
 
-        return () => clearTimeout(searchDelay);
+            return () => clearTimeout(searchDelay);
+        }
     }, [searchValue]);
+
     return (
-        <form>
-            <input
-                type="text"
-                value={searchValue}
-                onChange={(event) => {
-                    setSearchValue(event.target.value);
-                }}
-            />
-            <input type="submit" value="Search" />
-        </form>
+        <div>
+            <form>
+                <input
+                    type="text"
+                    value={searchValue}
+                    onChange={(event) => {
+                        setSearchValue(event.target.value);
+                    }}
+                />
+                <input type="submit" value="Search" />
+            </form>
+            <ul>
+                {searchResults ? (
+                    searchResults.map((result) => {
+                        return (
+                            <div key={result.id}>
+                                <p>{result.title}</p>
+                            </div>
+                        );
+                    })
+                ) : (
+                    <p>No results</p>
+                )}
+            </ul>
+        </div>
     );
 }
