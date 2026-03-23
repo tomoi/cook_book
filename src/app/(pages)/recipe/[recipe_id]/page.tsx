@@ -13,7 +13,7 @@ export default async function recipe({
     const { recipe_id } = await params;
     try {
         const response = await fetch(
-            `http://localhost:3000/api/recipe/${recipe_id}`
+            `${process.env.API_URL}/api/recipe/${recipe_id}`
         );
         data = await response.json();
         console.log(data);

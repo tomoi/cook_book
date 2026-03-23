@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { redirect } from 'next/navigation';
 
 async function submitData(data: any) {
-    const response = await fetch('http://localhost:3000/api/recipe', {
+    const response = await fetch(`${process.env.API_URL}/api/recipe`, {
         method: 'POST',
         body: JSON.stringify(data),
     });
