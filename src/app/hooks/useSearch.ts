@@ -7,14 +7,19 @@ interface Recipe {
 
 //custom hook to search the database for recipes.
 //parameter is the value the user wants to search
+//returns results, loading
 export default function useSearch(searchValue: string) {
     const [searchResults, setSearchResults] = useState<Recipe[] | undefined>(
         undefined
     );
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         //search after a short delay to prevent too many api calls and prevent needing to press the search button
+
         if (searchValue) {
+            setLoading(true);
+
             const searchDelay = setTimeout(async () => {
                 try {
                     const response = await fetch(
@@ -22,6 +27,7 @@ export default function useSearch(searchValue: string) {
                     );
                     const data = await response.json();
                     setSearchResults(await data);
+                    setLoading(false);
                     console.log(data);
                 } catch (error: any) {
                     console.error(error.message);
@@ -29,8 +35,10 @@ export default function useSearch(searchValue: string) {
             }, 600);
 
             return () => clearTimeout(searchDelay);
+        } else {
+            setLoading(false);
         }
     }, [searchValue]);
 
-    return searchResults;
+    return { searchResults, loading };
 }

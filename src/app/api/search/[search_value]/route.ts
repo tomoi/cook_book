@@ -12,7 +12,8 @@ export async function GET(
 
     const text =
         "SELECT id, title FROM recipe WHERE title_search @@ to_tsquery('english', $1)";
-    const values = [`${search_value}:*`];
+    // "/ /gi" is regex to select all the spaces, and replace them with " & " so posgresql can understand what the user is searching for
+    const values = [`${search_value.replace(/ /gi, ' & ')}:*`];
 
     const res = await client.query(text, values);
     client.release();

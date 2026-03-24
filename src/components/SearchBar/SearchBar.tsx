@@ -32,22 +32,25 @@ export default function SearchBar() {
                         <input type="submit" value="Search" />
                     </form>
                     <ul>
-                        {searchResults ? (
-                            searchResults.map((result: Recipe) => {
-                                return (
-                                    <li key={result.id}>
-                                        <Link
-                                            href={`http://localhost:3000/recipe/${result.id}`}
-                                        >
-                                            {result.title}
-                                        </Link>
-                                    </li>
-                                );
-                            })
+                        {searchResults.searchResults ? (
+                            searchResults.searchResults.map(
+                                (result: Recipe) => {
+                                    return (
+                                        <li key={result.id}>
+                                            <Link
+                                                href={`http://localhost:3000/recipe/${result.id}`}
+                                            >
+                                                {result.title}
+                                            </Link>
+                                        </li>
+                                    );
+                                }
+                            )
                         ) : (
-                            <p>No results</p>
+                            <li>No results</li>
                         )}
                     </ul>
+                    {searchResults.loading && <p>Loading...</p>}
                 </div>
             ) : (
                 <button onClick={() => setIsFocused(!isFocused)}>

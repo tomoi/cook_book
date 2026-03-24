@@ -13,6 +13,26 @@ export default function Search() {
     const [searchValue, setSearchValue] = useState('');
     const searchResults = useSearch(searchValue);
 
+    //if loading, show loading
+    if (searchResults.loading) {
+        return (
+            <div>
+                <form>
+                    <input
+                        type="text"
+                        value={searchValue}
+                        onChange={(event) => {
+                            setSearchValue(event.target.value);
+                        }}
+                    />
+                    {/* <input type="submit" value="Search" /> */}
+                </form>
+                <p>Loading...</p>
+            </div>
+        );
+    }
+
+    //if not loading, return normally
     return (
         <div>
             <form>
@@ -23,11 +43,11 @@ export default function Search() {
                         setSearchValue(event.target.value);
                     }}
                 />
-                {/* <input type="submit" value="Search" /> */}
             </form>
             <ul>
-                {searchResults ? (
-                    searchResults.map((result: Recipe) => {
+                {/* If the user wrote anything in the text box, show results. otherwise prompt the user to write */}
+                {searchValue !== '' &&
+                    searchResults.searchResults?.map((result: Recipe) => {
                         return (
                             <li key={result.id}>
                                 <Link
@@ -37,9 +57,10 @@ export default function Search() {
                                 </Link>
                             </li>
                         );
-                    })
-                ) : (
-                    <p>No results</p>
+                    })}
+                {/* if the array is empty, display no results */}
+                {searchResults.searchResults?.length == 0 && (
+                    <li>No Results</li>
                 )}
             </ul>
         </div>
