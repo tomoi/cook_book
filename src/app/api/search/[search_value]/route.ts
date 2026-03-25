@@ -12,8 +12,15 @@ export async function GET(
 
     const text =
         "SELECT id, title FROM recipe WHERE title_search @@ to_tsquery('english', $1)";
-    // "/ /gi" is regex to select all the spaces, and replace them with " & " so posgresql can understand what the user is searching for
-    const values = [`${search_value.replace(/ /gi, ' & ')}:*`];
+    const values = [
+        `${search_value
+            .replace(/[^a-z ]/gi, '') // replace anything that is not a letter with nothing
+            .replace(/  +/g, ' ') // replace double + spaces with a single space
+            .trim() // remove whitespace at the beginning and end of the string
+            .replace(/ /g, ' & ')}:*`, // replace single spaces with an & symbol so that postgresql can read it
+    ];
+
+    console.log(values);
 
     const res = await client.query(text, values);
     client.release();

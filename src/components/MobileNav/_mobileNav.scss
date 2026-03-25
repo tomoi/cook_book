@@ -1,0 +1,10 @@
+#mobile_header {
+    ul {
+        list-style: none;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 12px;
+        position: absolute;
+        top: 50px;
+    }
+}

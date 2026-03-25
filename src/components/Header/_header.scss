@@ -1,0 +1,27 @@
+@use '../MobileNav/mobileNav';
+
+header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: '. nav .';
+    column-gap: 20px;
+    width: 100%;
+    background-color: grey;
+
+    #desktop_header {
+        display: none;
+    }
+
+    #mobile_header {
+        height: 50px;
+        grid-area: nav;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+    }
+}
