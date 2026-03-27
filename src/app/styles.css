@@ -7,6 +7,26 @@
   top: 50px;
 }
 
+#mobile_header .search_input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: rgba(255, 255, 255, 0.567);
+  height: -moz-fit-content;
+  height: fit-content;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.532);
+  transition-duration: 200ms;
+}
+#mobile_header .search_input:focus {
+  outline: 2px solid rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.767);
+  transition-duration: 200ms;
+}
+
 header {
   display: grid;
   grid-template-columns: auto 1fr auto;

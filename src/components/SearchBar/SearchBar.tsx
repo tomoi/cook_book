@@ -15,21 +15,20 @@ export default function SearchBar() {
     const searchResults = useSearch(searchValue);
 
     return (
-        <div>
+        <div className="search_bar">
             {isFocused ? (
                 <div>
                     <form>
                         <input
+                            className="search_input"
                             autoFocus
-                            type="text"
+                            type="search"
                             value={searchValue}
                             onChange={(event) => {
                                 setSearchValue(event.target.value);
                             }}
-                            onBlur={() => setIsFocused(false)}
+                            // onBlur={() => setIsFocused(false)}
                         />
-
-                        <input type="submit" value="Search" />
                     </form>
                     <ul>
                         {searchResults.searchResults ? (
@@ -53,9 +52,11 @@ export default function SearchBar() {
                     {searchResults.loading && <p>Loading...</p>}
                 </div>
             ) : (
-                <button onClick={() => setIsFocused(!isFocused)}>
-                    Open SearchBar
-                </button>
+                <input
+                    type="image"
+                    src="/assets/search_icon.svg"
+                    onClick={() => setIsFocused(!isFocused)}
+                />
             )}
         </div>
     );
