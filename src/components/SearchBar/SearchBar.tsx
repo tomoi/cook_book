@@ -15,9 +15,9 @@ export default function SearchBar() {
     const searchResults = useSearch(searchValue);
 
     return (
-        <div className="search_bar">
+        <div className={`search_bar`}>
             {isFocused ? (
-                <div>
+                <>
                     <form>
                         <input
                             className="search_input"
@@ -27,10 +27,10 @@ export default function SearchBar() {
                             onChange={(event) => {
                                 setSearchValue(event.target.value);
                             }}
-                            // onBlur={() => setIsFocused(false)}
+                            onBlur={() => setIsFocused(false)}
                         />
                     </form>
-                    <ul>
+                    <ul className="search_results">
                         {searchResults.searchResults ? (
                             searchResults.searchResults.map(
                                 (result: Recipe) => {
@@ -50,7 +50,7 @@ export default function SearchBar() {
                         )}
                     </ul>
                     {searchResults.loading && <p>Loading...</p>}
-                </div>
+                </>
             ) : (
                 <input
                     type="image"

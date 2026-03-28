@@ -1,4 +1,23 @@
+@keyframes searchbar_animation {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
 #mobile_header {
+    .search_bar {
+        ul {
+            width: fit-content;
+        }
+    }
+    form {
+        display: flex;
+        width: fit-content;
+        justify-content: flex-end;
+    }
     .search_input {
         appearance: none;
         background-color: rgba(255, 255, 255, 0.567);
@@ -8,9 +27,8 @@
         border-radius: 12px;
         width: 100%;
         border: 2px solid rgba(0, 0, 0, 0.532);
-        transition-duration: 200ms;
-
-        // max-width: 20px;
+        animation-name: searchbar_animation;
+        animation-duration: 400ms;
 
         &:focus {
             outline: 2px solid rgb(255, 255, 255);
