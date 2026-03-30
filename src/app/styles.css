@@ -1,10 +1,24 @@
 #mobile_header nav ul {
+  position: absolute;
   list-style: none;
   display: flex;
   flex-flow: column nowrap;
-  gap: 12px;
   position: absolute;
-  top: 50px;
+  top: 52px;
+  left: 0;
+  width: 100%;
+  background-color: grey;
+}
+#mobile_header nav ul li {
+  text-align: center;
+}
+#mobile_header nav ul a {
+  display: block;
+  width: 100%;
+  padding: 10px 0px;
+}
+#mobile_header nav ul a:hover {
+  background-color: rgb(174, 174, 174);
 }
 
 @keyframes searchbar_animation {
@@ -15,17 +29,19 @@
     width: 100%;
   }
 }
-#mobile_header .search_bar ul {
+.search_bar ul {
   width: -moz-fit-content;
   width: fit-content;
 }
-#mobile_header form {
+
+form {
   display: flex;
   width: -moz-fit-content;
   width: fit-content;
   justify-content: flex-end;
 }
-#mobile_header .search_input {
+
+.search_input {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -40,36 +56,61 @@
   animation-name: searchbar_animation;
   animation-duration: 400ms;
 }
-#mobile_header .search_input:focus {
+.search_input:focus {
   outline: 2px solid rgb(255, 255, 255);
   background-color: rgba(255, 255, 255, 0.767);
   transition-duration: 200ms;
 }
 
 header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-areas: ". nav .";
-  -moz-column-gap: 20px;
-       column-gap: 20px;
   width: 100%;
   background-color: grey;
+  border-bottom: 2px solid black;
+}
+header h2 {
+  justify-self: center;
+  text-align: center;
+}
+header .search_bar {
+  justify-self: end;
 }
 header #desktop_header {
-  display: none;
-}
-header #mobile_header {
-  height: 50px;
-  grid-area: nav;
-  max-width: 1200px;
-  width: 100%;
   margin: 0 auto;
+  display: none;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  max-width: 1200px;
+}
+@media (min-width: 600px) {
+  header #desktop_header {
+    display: grid;
+  }
+}
+header #desktop_header nav ul {
   display: flex;
   flex-flow: row nowrap;
-  gap: 10px;
+  list-style: none;
+  gap: 12px;
+}
+header #mobile_header {
+  padding: 0 12px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 50px;
+  max-width: 400px;
+  width: 100%;
   align-items: center;
   justify-items: stretch;
   justify-content: space-between;
+}
+@media (min-width: 600px) {
+  header #mobile_header {
+    display: none;
+  }
 }
 header h2 {
   transition-duration: 200ms;

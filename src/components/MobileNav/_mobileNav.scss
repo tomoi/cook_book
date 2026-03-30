@@ -1,10 +1,27 @@
 #mobile_header {
     nav ul {
+        position: absolute;
         list-style: none;
         display: flex;
         flex-flow: column nowrap;
-        gap: 12px;
         position: absolute;
-        top: 50px;
+        top: 52px;
+        left: 0;
+        width: 100%;
+        // max-width: 376px;
+        background-color: grey;
+
+        li {
+            text-align: center;
+        }
+        a {
+            display: block;
+            width: 100%;
+            padding: 10px 0px;
+
+            &:hover {
+                background-color: rgb(174, 174, 174);
+            }
+        }
     }
 }

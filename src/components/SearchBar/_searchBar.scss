@@ -7,33 +7,33 @@
     }
 }
 
-#mobile_header {
-    .search_bar {
-        ul {
-            width: fit-content;
-        }
-    }
-    form {
-        display: flex;
+// #mobile_header {
+.search_bar {
+    ul {
         width: fit-content;
-        justify-content: flex-end;
-    }
-    .search_input {
-        appearance: none;
-        background-color: rgba(255, 255, 255, 0.567);
-        height: fit-content;
-        font-size: 18px;
-        padding: 4px 8px;
-        border-radius: 12px;
-        width: 100%;
-        border: 2px solid rgba(0, 0, 0, 0.532);
-        animation-name: searchbar_animation;
-        animation-duration: 400ms;
-
-        &:focus {
-            outline: 2px solid rgb(255, 255, 255);
-            background-color: rgba(255, 255, 255, 0.767);
-            transition-duration: 200ms;
-        }
     }
 }
+form {
+    display: flex;
+    width: fit-content;
+    justify-content: flex-end;
+}
+.search_input {
+    appearance: none;
+    background-color: rgba(255, 255, 255, 0.567);
+    height: fit-content;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    width: 100%;
+    border: 2px solid rgba(0, 0, 0, 0.532);
+    animation-name: searchbar_animation;
+    animation-duration: 400ms;
+
+    &:focus {
+        outline: 2px solid rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.767);
+        transition-duration: 200ms;
+    }
+}
+// }

@@ -28,9 +28,13 @@ export default async function Header() {
                         <li>
                             <Link href="/search">Search</Link>
                         </li>
+                        <li>
+                            <UserDropdown session={session} />
+                        </li>
                     </ul>
                 </nav>
-                <UserDropdown session={session} />
+                <h2>Cook Book</h2>
+
                 <SearchBar />
             </div>
             <div id="mobile_header">
