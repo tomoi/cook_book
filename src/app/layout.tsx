@@ -1,15 +1,9 @@
 import Header from '@/components/Header/Header';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Figtree } from 'next/font/google';
 import '@/app/styles.css';
 
-const geistSans = Geist({
-    variable: '--font-geist-sans',
-    subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-    variable: '--font-geist-mono',
+const figtree = Figtree({
     subsets: ['latin'],
 });
 
@@ -24,10 +18,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" className={figtree.className}>
             <body>
                 <Header />
-                {children}
+                <main>{children}</main>
             </body>
         </html>
     );

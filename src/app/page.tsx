@@ -17,7 +17,7 @@ export default async function HomePage() {
         console.error(error.message);
     }
     return (
-        <main>
+        <>
             <h1>Home Page</h1>
             {data ? (
                 data.map((recipe: Recipe) => {
@@ -40,6 +40,6 @@ export default async function HomePage() {
             ) : (
                 <p>No recipes available.</p>
             )}
-        </main>
+        </>
     );
 }

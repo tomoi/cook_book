@@ -28,7 +28,6 @@ export default function useSearch(searchValue: string) {
                     const data = await response.json();
                     setSearchResults(await data);
                     setLoading(false);
-                    console.log(data);
                 } catch (error: any) {
                     console.error(error.message);
                 }

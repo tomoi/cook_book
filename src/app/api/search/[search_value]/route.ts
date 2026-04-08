@@ -20,8 +20,6 @@ export async function GET(
             .replace(/ /g, ' & ')}:*`, // replace single spaces with an & symbol so that postgresql can read it
     ];
 
-    console.log(values);
-
     const res = await client.query(text, values);
     client.release();
 

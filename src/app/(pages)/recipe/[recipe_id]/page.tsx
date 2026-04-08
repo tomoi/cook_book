@@ -1,6 +1,7 @@
 'use server';
 
 import type { RecipeObject } from '@/app/interfaces';
+import Rating from '@/components/rating/Rating';
 
 //retrieve the recipe id from the url
 export default async function recipe({
@@ -16,16 +17,15 @@ export default async function recipe({
             `${process.env.API_URL}/api/recipe/${recipe_id}`
         );
         data = await response.json();
-        console.log(data);
     } catch (error: any) {
         console.error(error.message);
     }
 
     return (
-        <div>
+        <div id="recipe_page">
             <h1>{data?.title}</h1>
             {/* todo: add a star thing for ratings, also make a "no ratings" if the stars are 0 */}
-            <p>Rating {data?.rating}</p>
+            <Rating rating={data?.rating} />
             <div className="ingredients">
                 {data?.ingredients.map((ingredient) => {
                     return (
