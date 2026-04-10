@@ -1,0 +1,13 @@
+#recipe_form {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    gap: 10px;
+    .button {
+        width: fit-content;
+    }
+    .error_message {
+        color: rgb(126, 0, 0);
+        margin-bottom: 10px;
+    }
+}

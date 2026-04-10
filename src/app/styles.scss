@@ -1,6 +1,7 @@
 @use 'variables.scss';
 @use '../components/Header/header';
 @use '../app/\(pages\)/recipe/[recipe_id]/recipe';
+@use '../app/\(pages\)/recipeInput/recipeForm/recipeForm';
 
 * {
     margin: 0;

@@ -18,7 +18,6 @@ async function submitData(data: any) {
 
 export default function RecipeForm() {
     const [error, setError] = useState();
-    const [loading, setLoading] = useState(false);
     const [ingredientCount, setIngredientCount] = useState(1);
 
     async function onSubmit(data: any) {
@@ -82,24 +81,28 @@ export default function RecipeForm() {
                 <input
                     type="text"
                     {...register(`ingredients.${i}.ingredient`)}
-                    placeholder="Eg. Flour"
+                    placeholder="'Flour'"
                 />
                 {/* zod error message */}
                 {errors.ingredients?.[i]?.ingredient?.message && (
-                    <p>{errors.ingredients?.[i]?.ingredient?.message}</p>
+                    <p className="error_message">
+                        {errors.ingredients?.[i]?.ingredient?.message}
+                    </p>
                 )}
 
                 <input
                     type="text"
+                    placeholder="'1 1/3'"
                     //regex to allow any character from 0-9, a forward slash '/', any whitespace character '\s' and it must be 1 or more characters '{1,}'
                     pattern="[0-9\/\s]{1,}"
                     {...register(`ingredients.${i}.count`)}
                 />
                 {errors.ingredients?.[i]?.count?.message && (
-                    <p>{errors.ingredients?.[i]?.count?.message}</p>
+                    <p className="error_message">
+                        {errors.ingredients?.[i]?.count?.message}
+                    </p>
                 )}
                 <select
-                    id=""
                     defaultValue=""
                     {...register(`ingredients.${i}.measure_type`)}
                 >
@@ -115,27 +118,34 @@ export default function RecipeForm() {
                     <option value="l">Liter(s)</option>
                 </select>
                 {errors.ingredients?.[i]?.measure_type?.message && (
-                    <p>{errors.ingredients?.[i]?.measure_type?.message}</p>
+                    <p className="error_message">
+                        {errors.ingredients?.[i]?.measure_type?.message}
+                    </p>
                 )}
                 {errors.ingredients?.message && (
-                    <p>{errors.ingredients?.message}</p>
+                    <p className="error_message">
+                        {errors.ingredients?.message}
+                    </p>
                 )}
             </div>
         );
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="email">Recipe Title</label>
+        <form onSubmit={handleSubmit(onSubmit)} id="recipe_form">
+            <label htmlFor="title">Recipe Title</label>
             <input
                 type="text"
                 {...register('title')}
-                placeholder="Eg. 'Easy Bake Brownies'"
+                placeholder="'Easy Bake Brownies'"
             />
-            {errors.title?.message && <p>{errors.title?.message}</p>}
+            {errors.title?.message && (
+                <p className="error_message">{errors.title?.message}</p>
+            )}
             {ingredients}
             <p>Must provide 2 or more ingredients.</p>
             <input
+                className="button"
                 type="button"
                 onClick={(e) => {
                     e.preventDefault();
@@ -144,6 +154,7 @@ export default function RecipeForm() {
                 value="Add Ingredient"
             />
             <input
+                className="button"
                 type="button"
                 onClick={(e) => {
                     e.preventDefault();
@@ -154,14 +165,18 @@ export default function RecipeForm() {
                 disabled={ingredientCount === 1}
                 value="Remove Ingredient"
             />
-            <textarea {...register('instructions')}></textarea>
+            <label htmlFor="instructions">Instructions</label>
+            <textarea
+                {...register('instructions')}
+                placeholder="Type instructions here:"
+            />
             {errors.instructions?.message && (
-                <p>{errors.instructions?.message}</p>
+                <p className="error_message">{errors.instructions?.message}</p>
             )}
 
             {/* TODO: make this a submit button but have it ask the user if they
             want to submit the recipe before it pushes to the server. */}
-            <input type="submit" disabled={loading} value="Submit Recipe" />
+            <input type="submit" className="button" value="Submit Recipe" />
         </form>
     );
 }

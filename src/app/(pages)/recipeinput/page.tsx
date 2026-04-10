@@ -14,9 +14,5 @@ export default async function RecipeInput() {
     if (!session) {
         redirect('/signin');
     }
-    return (
-        <main>
-            <RecipeForm />
-        </main>
-    );
+    return <RecipeForm />;
 }
