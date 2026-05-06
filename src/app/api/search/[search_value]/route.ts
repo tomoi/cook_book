@@ -11,13 +11,13 @@ export async function GET(
     const { search_value } = await params;
 
     const text =
-        "SELECT id, title FROM recipe WHERE title_search @@ to_tsquery('english', $1)";
+        "SELECT id, title FROM recipe WHERE title_search @@ plainto_tsquery('english', $1)";
     const values = [
-        `${search_value
+        search_value
             .replace(/[^a-z ]/gi, '') // replace anything that is not a letter with nothing
             .replace(/  +/g, ' ') // replace double + spaces with a single space
-            .trim() // remove whitespace at the beginning and end of the string
-            .replace(/ /g, ' & ')}:*`, // replace single spaces with an & symbol so that postgresql can read it
+            .trim(), // remove whitespace at the beginning and end of the string
+        // .replace(/ /g, ' & ')}:*`, // replace single spaces with an & symbol so that postgresql can read it
     ];
 
     const res = await client.query(text, values);
