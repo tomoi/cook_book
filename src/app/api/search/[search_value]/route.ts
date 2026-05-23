@@ -1,5 +1,6 @@
 'use server';
 import { Pool } from 'pg';
+import { NextResponse } from 'next/server';
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -20,8 +21,16 @@ export async function GET(
         // .replace(/ /g, ' & ')}:*`, // replace single spaces with an & symbol so that postgresql can read it
     ];
 
-    const res = await client.query(text, values);
-    client.release();
+    try {
+        const res = await client.query(text, values);
+        client.release();
 
-    return Response.json(res.rows);
+        return NextResponse.json(res.rows);
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(
+            { error: 'Internal Server Error' },
+            { status: 500 }
+        );
+    }
 }
